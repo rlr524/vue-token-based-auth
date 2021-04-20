@@ -8,6 +8,7 @@
         :event="event"
       ></app-event-card>
     </template>
+    <p v-else>Loading events...</p>
   </div>
 </template>
 
@@ -27,7 +28,7 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:3000").then(({ data }) => {
+    axios.get("http://localhost:3000/dashboard").then(({ data }) => {
       this.events = data.events.events;
       this.isLoading = false;
     });
