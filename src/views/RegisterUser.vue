@@ -7,7 +7,8 @@
         type="text"
         name=""
         id="user-name"
-        aria-label="name"
+        placeholder="Name"
+        aria-placeholder="Name"
         autocomplete="name"
         value
       />
@@ -18,7 +19,8 @@
         type="email"
         name=""
         id="user-email"
-        aria-label="email"
+        placeholder="Email"
+        aria-placeholder="Email"
         autocomplete="email"
         value
       />
@@ -29,12 +31,13 @@
         type="password"
         name="password"
         id="user-password"
-        aria-label="password"
-        autocomplete="current-password"
+        placeholder="Choose a Strong Password"
+        aria-placeholder="Choose a Strong Password"
         value
       />
 
       <button type="submit" name="button">Register</button>
+      <router-link to="login">Already have an account? Login.</router-link>
     </form>
   </div>
 </template>

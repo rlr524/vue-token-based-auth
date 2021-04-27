@@ -30,6 +30,19 @@ export default new Vuex.Store({
 					// makes the code more readable)
 				});
 		},
+		login({ commit }, credentials) {
+			return axios
+				.post("http://localhost:3000/login", credentials)
+				.then(({ data }) => {
+					commit("SET_USER_DATA", data);
+				});
+		},
 	},
 	modules: {},
+	getters: {
+		loggedIn(state) {
+			// The !! returns the truthiness or falsiness of the value as a bool, e.g. if state.user has data, so is true, it will return true...
+			return !!state.user;
+		},
+	},
 });

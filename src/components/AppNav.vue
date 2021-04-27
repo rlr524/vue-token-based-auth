@@ -2,13 +2,17 @@
   <div id="nav">
     <router-link to="/">Home</router-link>
     <router-link to="/dashboard">Dashboard</router-link>
-    <router-link to="/register">Register</router-link>
+    <router-link to="/login" class="button" v-if="!loggedIn">Login</router-link>
   </div>
 </template>
 
 <script>
+import { authComputed } from "@/vuex/helpers.js";
 export default {
   name: "AppNav",
+  computed: {
+    ...authComputed,
+  },
 };
 </script>
 
