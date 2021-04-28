@@ -1,8 +1,12 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link>
-    <router-link to="/dashboard">Dashboard</router-link>
+    <router-link to="/dashboard" v-if="loggedIn">Dashboard</router-link>
     <router-link to="/login" class="button" v-if="!loggedIn">Login</router-link>
+    <!-- We don't want to preserve page state on log out, so we don't use a router link here -->
+    <button v-else type="button" class="logout-button" @click="logout">
+      Logout
+    </button>
   </div>
 </template>
 
@@ -12,6 +16,11 @@ export default {
   name: "AppNav",
   computed: {
     ...authComputed,
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
   },
 };
 </script>
@@ -57,7 +66,7 @@ button,
   }
 }
 
-.logoutButton {
+.logout-button {
   cursor: pointer;
 }
 

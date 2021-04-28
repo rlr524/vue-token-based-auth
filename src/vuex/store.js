@@ -16,11 +16,17 @@ export default new Vuex.Store({
 				"Authorization"
 			] = `Bearer ${userData.token}`;
 		},
+		CLEAR_USER_DATA() {
+			// state.user = null; Can use location.reload() instead which reloads the current page, in this case  it's /
+			localStorage.removeItem("user");
+			// axios.defaults.headers.common["Authorization"] = null; Can use location.reload() instead which reloads the current page, in this case it's /
+			location.reload();
+		},
 	},
 	actions: {
-		register({ commit }, credentials) {
+		register({ commit }, auths) {
 			return axios
-				.post("http://localhost:3000/register", credentials)
+				.post("http://localhost:3000/register", auths)
 				.then(({ data }) => {
 					commit("SET_USER_DATA", data);
 					// console.log("User data is: %o", data);
@@ -30,12 +36,15 @@ export default new Vuex.Store({
 					// makes the code more readable)
 				});
 		},
-		login({ commit }, credentials) {
+		login({ commit }, auths) {
 			return axios
-				.post("http://localhost:3000/login", credentials)
+				.post("http://localhost:3000/login", auths)
 				.then(({ data }) => {
 					commit("SET_USER_DATA", data);
 				});
+		},
+		logout({ commit }) {
+			commit("CLEAR_USER_DATA");
 		},
 	},
 	modules: {},
