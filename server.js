@@ -34,13 +34,25 @@ app.post("/register", (req, res) => {
 			name: req.body.name,
 			email: req.body.email,
 			password: req.body.password,
-			// Remember in a prod app, we'd encrypt the password
+			// Remember in a prod app, we'd hash & salt the password and use an encrypted db or even more likely use an auth integration from Firebase, etc.
 		};
 		const data = JSON.stringify(user, null, 2);
 		var dbUserEmail = require("./db/user.json").email;
+		var errorsToSend = []; // Array to collect errors
 
-		if (dbUserEmail === req.body.email) {
-			res.sendStatus(400);
+		if (dbUserEmail === user.email) {
+			// Check to see if the email already exists in the db
+			errorsToSend.push("An account with this email already exists.");
+		}
+		if (user.password.length < 6) {
+			// Validate that the password is at least six chars;
+			// TODO: Add some Regex to accept only specific chars, not permit repeated
+			errorsToSend.push(
+				"Password must be at least six characters including capital or lowercase letters, numbers, or symbols"
+			);
+		}
+		if (errorsToSend.length > 0) {
+			res.status(400).json({ errors: errorsToSend });
 		} else {
 			fs.writeFile("./db/user.json", data, (err) => {
 				if (err) {
@@ -76,7 +88,7 @@ app.post("/login", (req, res) => {
 			name: userInfo.name,
 		});
 	} else {
-		res.sendStatus(400);
+		res.status(401).json({ error: "Invalid login. Please try again." }); // Send error if credentials don't match a user in the db
 	}
 });
 
