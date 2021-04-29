@@ -42,7 +42,7 @@ app.post("/register", (req, res) => {
 
 		if (dbUserEmail === user.email) {
 			// Check to see if the email already exists in the db
-			errorsToSend.push("An account with this email already exists.");
+			errorsToSend.push("An account with this email already exists");
 		}
 		if (user.password.length < 6) {
 			// Validate that the password is at least six chars;

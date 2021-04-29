@@ -22,9 +22,9 @@
         autocomplete="current-password"
       />
       <button type="submit" name="button">Login</button>
-      <p>{{ error }}</p>
-      <router-link to="register">Don't have an account? Register.</router-link>
     </form>
+    <p class="error">{{ error }}</p>
+    <router-link to="register">Don't have an account? Register.</router-link>
   </div>
 </template>
 
